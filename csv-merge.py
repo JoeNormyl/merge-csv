@@ -16,12 +16,14 @@ import pandas as pd
 
 def set_file_path():
     # Confirm current woring directory path
-    pth = (os.getcwd()+'/')
+    pth = (os.path.expanduser( '~')+'/')
     # Prompt user for csv source directory or use working
-    usr_pth = input(f"Current path is {pth}. Specify path to directory for file access or type current to stay here")
+    usr_pth = input(f"Current path is {pth}. Specify path to directory for file access or type current to stay here ")
     if usr_pth == "current":
         return pth
     else:
+        usr_pth = pth+usr_pth
+        print(f"The path is now {usr_pth}")
         return usr_pth
 
     # Update path variable
