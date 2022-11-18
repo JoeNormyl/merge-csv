@@ -1,5 +1,5 @@
 ##### TO DO####
-# Set up Git
+
 # Create search funcitonality
 # help function listener
 # Change output directory
@@ -9,7 +9,19 @@ import os
 import pandas as pd
 
 # Set File Path
-path = (os.getcwd()+'/')
+
+
+def set_file_path():
+    # Confirm current woring directory path
+    pth = (os.getcwd()+'/')
+    # Prompt user for csv source directory or use working
+    print(f"Make sure CSV files to be merged are in the {pth}Files directory. ")
+    if input(f"Ready to continue? y or n ") == "n":
+        print(f"Please move CSVs to the Files directory at {pth}Files")
+        quit()
+    else:
+        return pth
+    # Update path variable
 
 # Creates list of files matching user input (starts with)
 
@@ -48,6 +60,12 @@ def verify(lst):
     else:
         print("Prompt goes here")
 
+# Addiional Search Within Results
+
+def search():
+     return
+
+
 # Merge listed CSVs
 
 
@@ -70,6 +88,8 @@ def merge(lst):
 
     print("Order Up!")
 
+# Set File Path
+path = set_file_path()
 
 # Run Name List for Start
 name_list, output_name = create_file_list()
