@@ -2,6 +2,9 @@
 .CSV
 .csv
 
+# Ignore Files directory
+Files
+
 #Ignore Node Modules
 node_modules
 
