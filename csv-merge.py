@@ -34,7 +34,7 @@ def set_file_path():
 def create_file_list():
 
     # Get user input for files startswith string
-    sw_str = str(input("What do the files start with? "))
+    sw_str = str(input("Find files containing: "))
 
     # Get user input for name of merged file
     output_name = str(
@@ -65,7 +65,7 @@ def verify(lst):
     else:
         search(lst)
 
-# Addiional Search Within Results
+# Search Within Files
 
 def search(lst):
     # Prompt user for additional search term
