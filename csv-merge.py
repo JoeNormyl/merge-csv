@@ -34,7 +34,7 @@ def set_file_path():
 def create_file_list():
 
     # Get user input for files startswith string
-    sw_str = str(input("Find files containing: "))
+    usr_srch = str(input("Find files containing: "))
 
     # Get user input for name of merged file
     output_name = str(
@@ -42,9 +42,9 @@ def create_file_list():
     print(output_name)
 
     # Create list with files to merge based on user input
-    file_list = [f for f in os.listdir(path) if f.startswith(sw_str)]
-
-    return file_list, output_name
+  #  file_list = [f for f in os.listdir(path) if f.startswith(sw_str)]
+    file_lst = ([item for item in os.listdir(path) if usr_srch in item])
+    return file_lst, output_name
 
 # Counts and prints all items on a list
 
@@ -69,8 +69,8 @@ def verify(lst):
 
 def search(lst):
     # Prompt user for additional search term
-        usr_srch =input("Search within results. Type additional search term or type n to exit: ")
-        if usr_srch == "n":
+        usr_srch =input("Search within results. Type additional search term or type exit to exit: ")
+        if usr_srch == "exit":
             print("Then there is no pleasing you")
             quit()
     # assign files to list if they contain user search term
