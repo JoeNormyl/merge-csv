@@ -1,11 +1,21 @@
 ##### TO DO####
 
-# Create search funcitonality
-# help function listener
+# Allow user to type specific file names or search
+# Add checks for exit, affirmative and negative response and search
+# Add listener for exit or esc
+# Restart function listener
+# Help function listener
 # Change output directory
+# Create init function to run
+# Create error handling and "no such directory" catch
+# Implement terminal logs for debugging
 
 ### Wishlist 
 #Track and manage all downloaded CSVs and create internal file structure
+#Play cool sound when merge is complete
+#GUI interface
+#Come up with cool name
+#publish... for sale?
 
 # Merge Multiple 1M Rows CSV files
 import os
@@ -19,6 +29,7 @@ def set_file_path():
     pth = (os.path.expanduser( '~')+'/')
     # Prompt user for csv source directory or use working
     usr_pth = input(f"Current path is {pth}. Specify path to directory for file access or type current to stay here ")
+    # Update path variable
     if usr_pth == "current":
         return pth
     else:
@@ -26,7 +37,7 @@ def set_file_path():
         print(f"The path is now {usr_pth}")
         return usr_pth
 
-    # Update path variable
+
 
 # Creates list of files matching user input (starts with)
 
