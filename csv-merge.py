@@ -22,7 +22,7 @@ def set_file_path():
     if usr_pth == "current":
         return pth
     else:
-        usr_pth = pth+usr_pth
+        usr_pth = pth+usr_pth+"/"
         print(f"The path is now {usr_pth}")
         return usr_pth
 
@@ -49,10 +49,10 @@ def create_file_list():
 # Counts and prints all items on a list
 
 
-def cnt_files(list):
-    cnt = str(len(list))
-    print("There are " + cnt + " to be merged. File names are: ")
-    for n in list:
+def cnt_files(lst):
+    cnt = str(len(lst))
+    print(f"There are {cnt} to be merged. File names are: ")
+    for n in lst:
         print(n)
 
 # Verify with user input whether to merge
@@ -63,12 +63,20 @@ def verify(lst):
     if usr_verify == "y":
         merge(lst)
     else:
-        print("Prompt goes here")
+        search(lst)
 
 # Addiional Search Within Results
 
-def search():
-     return
+def search(lst):
+    # Prompt user for additional search term
+        usr_srch =input("Search within results. Type additional search term or type n to exit: ")
+        if usr_srch == "n":
+            print("Then there is no pleasing you")
+            quit()
+    # assign files to list if they contain user search term
+        file_lst = ([item for item in lst if usr_srch in item])
+        cnt_files(file_lst)
+        verify(file_lst)
 
 
 # Merge listed CSVs
@@ -91,19 +99,19 @@ def merge(lst):
 # Single DF is saved to the path in CSV format, without index column
     csv_merged.to_csv(path + output_name, index=False)
 
-    print("Order Up!")
+    print(f"Merge Complete. File saved in {path}{output_name}")
 
 # Set File Path
 path = set_file_path()
 
 # Run Name List for Start
-name_list, output_name = create_file_list()
+file_list, output_name = create_file_list()
 
 # Display initial list
-cnt_files(name_list)
+cnt_files(file_list)
 
 # Verify Input and Merge
-verify(name_list)
+verify(file_list)
 
 
 # Verify Merge
