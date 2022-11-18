@@ -1,0 +1,12 @@
+# Ignore CSV files
+.CSV
+.csv
+
+#Ignore Node Modules
+node_modules
+
+#Ignore evnironment variables
+.env
+
+#Ignore Mac System Files
+.DS_store
