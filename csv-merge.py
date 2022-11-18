@@ -4,6 +4,9 @@
 # help function listener
 # Change output directory
 
+### Wishlist 
+#Track and manage all downloaded CSVs and create internal file structure
+
 # Merge Multiple 1M Rows CSV files
 import os
 import pandas as pd
@@ -15,12 +18,12 @@ def set_file_path():
     # Confirm current woring directory path
     pth = (os.getcwd()+'/')
     # Prompt user for csv source directory or use working
-    print(f"Make sure CSV files to be merged are in the {pth}Files directory. ")
-    if input(f"Ready to continue? y or n ") == "n":
-        print(f"Please move CSVs to the Files directory at {pth}Files")
-        quit()
-    else:
+    usr_pth = input(f"Current path is {pth}. Specify path to directory for file access or type current to stay here")
+    if usr_pth == "current":
         return pth
+    else:
+        return usr_pth
+
     # Update path variable
 
 # Creates list of files matching user input (starts with)
@@ -126,3 +129,13 @@ verify(name_list)
 #         # If yes continue and merge
 # if usr_verify == "y" or "yes":
 #     # 3. creates empty list to include the content of each file converted to pandas DF
+#
+# #print(f"Make sure CSV files to be merged are in the {pth}Files directory. ")
+#     if input(f"Ready to continue? y or n ") == "n":
+#         print(f"Please move CSVs to the Files directory at {pth}Files")
+#         quit()
+#     else:
+#         return pth
+#
+#
+
