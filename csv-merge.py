@@ -10,25 +10,27 @@
 # Create error handling and "no such directory" catch
 # Implement terminal logs for debugging
 
-### Wishlist 
-#Track and manage all downloaded CSVs and create internal file structure
-#Play cool sound when merge is complete
-#GUI interface
-#Come up with cool name
-#publish... for sale?
+# Wishlist
+# Track and manage all downloaded CSVs and create internal file structure
+# Play cool sound when merge is complete
+# GUI interface
+# Come up with cool name
+# publish... for sale?
 
 # Merge Multiple 1M Rows CSV files
 import os
 import pandas as pd
+import search-within-directory
 
 # Set File Path
 
 
 def set_file_path():
     # Confirm current woring directory path
-    pth = (os.path.expanduser( '~')+'/')
+    pth = (os.path.expanduser('~')+'/')
     # Prompt user for csv source directory or use working
-    usr_pth = input(f"Current path is {pth}. Specify path to directory for file access or type current to stay here ")
+    usr_pth = input(
+        f"Current path is {pth}. Specify path to directory for file access or type current to stay here ")
     # Update path variable
     if usr_pth == "current":
         return pth
@@ -38,22 +40,20 @@ def set_file_path():
         return usr_pth
 
 
-
 # Creates list of files matching user input (starts with)
 
 
 def create_file_list():
-
-    # Get user input for files startswith string
-    usr_srch = str(input("Find files containing: "))
-
     # Get user input for name of merged file
     output_name = str(
         input("What do you want to call the merged file? ")+".csv")
     print(output_name)
 
+    # Get user input for files startswith string
+    usr_srch = str(input("Find files containing: "))
+
     # Create list with files to merge based on user input
-  #  file_list = [f for f in os.listdir(path) if f.startswith(sw_str)]
+    # file_list = [f for f in os.listdir(path) if f.startswith(sw_str)]
     file_lst = ([item for item in os.listdir(path) if usr_srch in item])
     return file_lst, output_name
 
@@ -78,16 +78,21 @@ def verify(lst):
 
 # Search Within Files
 
+
 def search(lst):
     # Prompt user for additional search term
-        usr_srch =input("Search within results. Type additional search term or type exit to exit: ")
-        if usr_srch == "exit":
-            print("Then there is no pleasing you")
-            quit()
+    usr_srch = input(
+        "Search within results. Type additional search term or type exit to exit: ")
+    if usr_srch == "exit":
+        print("Then there is no pleasing you")
+        quit()
     # assign files to list if they contain user search term
-        file_lst = ([item for item in lst if usr_srch in item])
-        cnt_files(file_lst)
-        verify(file_lst)
+    file_lst = ([item for item in lst if usr_srch in item])
+    if len(file_lst) == 0:
+        print(f"No files found matching search. Please try again ")
+        file_lst = lst
+    cnt_files(file_lst)
+    verify(file_lst)
 
 
 # Merge listed CSVs
@@ -111,6 +116,7 @@ def merge(lst):
     csv_merged.to_csv(path + output_name, index=False)
 
     print(f"Merge Complete. File saved in {path}{output_name}")
+
 
 # Set File Path
 path = set_file_path()
@@ -159,4 +165,3 @@ verify(file_list)
 #         return pth
 #
 #
-
