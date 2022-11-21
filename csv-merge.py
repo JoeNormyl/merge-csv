@@ -20,7 +20,8 @@
 # Merge Multiple 1M Rows CSV files
 import os
 import pandas as pd
-import search-within-directory
+import search
+
 
 # Set File Path
 
@@ -43,18 +44,18 @@ def set_file_path():
 # Creates list of files matching user input (starts with)
 
 
-def create_file_list():
+def create_file_list(pth):
     # Get user input for name of merged file
     output_name = str(
         input("What do you want to call the merged file? ")+".csv")
     print(output_name)
 
     # Get user input for files startswith string
-    usr_srch = str(input("Find files containing: "))
+   # usr_srch = str(input("Find files containing: "))
 
     # Create list with files to merge based on user input
-    # file_list = [f for f in os.listdir(path) if f.startswith(sw_str)]
-    file_lst = ([item for item in os.listdir(path) if usr_srch in item])
+    file_lst = ([item for item in os.listdir(pth)])
+    print(f"CREATE_FILE_NAME function complete")
     return file_lst, output_name
 
 # Counts and prints all items on a list
@@ -62,37 +63,44 @@ def create_file_list():
 
 def cnt_files(lst):
     cnt = str(len(lst))
-    print(f"There are {cnt} to be merged. File names are: ")
-    for n in lst:
-        print(n)
+    print(f"There are {cnt} to be merged.")
+    print(f"CNT_FILES function complete")
+    return (cnt)
 
 # Verify with user input whether to merge
 
 
-def verify(lst):
-    usr_verify = str(input("Do you want to merge all these files? y or n "))
+def verify(lst, cnt):
+
+    usr_verify = str(input(f"Do you want to merge {cnt} files? y or n "))
     if usr_verify == "y":
         merge(lst)
     else:
-        search(lst)
+        res = search.search(lst)
+        cnt_files(res)
+        verify(res)
+
+    # print(f"File names are: ")
+    # for n in lst:
+    #     print(n)
 
 # Search Within Files
 
 
-def search(lst):
-    # Prompt user for additional search term
-    usr_srch = input(
-        "Search within results. Type additional search term or type exit to exit: ")
-    if usr_srch == "exit":
-        print("Then there is no pleasing you")
-        quit()
-    # assign files to list if they contain user search term
-    file_lst = ([item for item in lst if usr_srch in item])
-    if len(file_lst) == 0:
-        print(f"No files found matching search. Please try again ")
-        file_lst = lst
-    cnt_files(file_lst)
-    verify(file_lst)
+# def search(lst):
+#     # Prompt user for additional search term
+#     usr_srch = input(
+#         "Search within results. Type additional search term or type exit to exit: ")
+#     if usr_srch == "exit":
+#         print("Then there is no pleasing you")
+#         quit()
+#     # assign files to list if they contain user search term
+#     file_lst = ([item for item in lst if usr_srch in item])
+#     if len(file_lst) == 0:
+#         print(f"No files found matching search. Please try again ")
+#         file_lst = lst
+#     cnt_files(file_lst)
+#     verify(file_lst)
 
 
 # Merge listed CSVs
@@ -122,13 +130,13 @@ def merge(lst):
 path = set_file_path()
 
 # Run Name List for Start
-file_list, output_name = create_file_list()
+file_list, output_name = create_file_list(path)
 
 # Display initial list
-cnt_files(file_list)
+current_count = cnt_files(file_list)
 
 # Verify Input and Merge
-verify(file_list)
+verify(file_list, current_count)
 
 
 # Verify Merge
