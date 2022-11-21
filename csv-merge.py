@@ -28,18 +28,14 @@ def set_file_path():
 
 
 def create_file_list(pth):
-    # Get user input for name of merged file
-    output_name = str(
-        input("What do you want to call the merged file? ")+".csv")
-    print(output_name)
 
     # Get user input for files startswith string
    # usr_srch = str(input("Find files containing: "))
 
     # Create list with files to merge based on user input
     file_lst = ([item for item in os.listdir(pth)])
-    print(f"CREATE_FILE_NAME function complete")
-    return file_lst, output_name
+    print(f"CREATE_FILE_LIST function complete")
+    return file_lst
 
 # Counts and prints all items on a list
 
@@ -47,6 +43,9 @@ def create_file_list(pth):
 def cnt_files(lst):
     cnt = str(len(lst))
     print(f"There are {cnt} to be merged.")
+    print(f"File names are: ")
+    for n in lst:
+        print(n)
     print(f"CNT_FILES function complete")
     return (cnt)
 
@@ -70,6 +69,10 @@ def verify(lst, cnt):
 def merge(lst):
     file_list = [path + n for n in lst]
     csv_list = []
+    # Get user input for name of merged file
+    output_name = str(
+        input("What do you want to call the merged file? ")+".csv")
+    print(output_name)
 
 # reads each (sorted) file in file_list, converts it to pandas DF and appends it to the csv_list
     for file in sorted(file_list):
@@ -91,7 +94,7 @@ def merge(lst):
 path = set_file_path()
 
 # Run Name List for Start
-file_list, output_name = create_file_list(path)
+file_list = create_file_list(path)
 
 # Display initial list
 current_count = cnt_files(file_list)

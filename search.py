@@ -1,8 +1,6 @@
 def search(lst):
     # Prompt user for additional search term
-    print(f"File names are: ")
-    for n in lst:
-        print(n)
+
     usr_srch = input(
         "Search within results. Type additional search term or type exit to exit: ")
     if usr_srch == "exit":
