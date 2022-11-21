@@ -1,23 +1,6 @@
-##### TO DO####
 
-# Allow user to type specific file names or search
-# Add checks for exit, affirmative and negative response and search
-# Add listener for exit or esc
-# Restart function listener
-# Help function listener
-# Change output directory
-# Create init function to run
-# Create error handling and "no such directory" catch
-# Implement terminal logs for debugging
 
-# Wishlist
-# Track and manage all downloaded CSVs and create internal file structure
-# Play cool sound when merge is complete
-# GUI interface
-# Come up with cool name
-# publish... for sale?
-
-# Merge Multiple 1M Rows CSV files
+# Import Modules
 import os
 import pandas as pd
 import search
@@ -77,30 +60,8 @@ def verify(lst, cnt):
         merge(lst)
     else:
         res = search.search(lst)
-        cnt_files(res)
-        verify(res)
-
-    # print(f"File names are: ")
-    # for n in lst:
-    #     print(n)
-
-# Search Within Files
-
-
-# def search(lst):
-#     # Prompt user for additional search term
-#     usr_srch = input(
-#         "Search within results. Type additional search term or type exit to exit: ")
-#     if usr_srch == "exit":
-#         print("Then there is no pleasing you")
-#         quit()
-#     # assign files to list if they contain user search term
-#     file_lst = ([item for item in lst if usr_srch in item])
-#     if len(file_lst) == 0:
-#         print(f"No files found matching search. Please try again ")
-#         file_lst = lst
-#     cnt_files(file_lst)
-#     verify(file_lst)
+        cnt = cnt_files(res)
+        verify(res, cnt)
 
 
 # Merge listed CSVs
@@ -138,38 +99,21 @@ current_count = cnt_files(file_list)
 # Verify Input and Merge
 verify(file_list, current_count)
 
+##### TO DO####
 
-# Verify Merge
-# if usr_verify == "n" or "N":
-#     usr_verify = str(
-#         input("Search within results. Type additional search term or type N to exit: "))
-# #     print(usr_verify)
-# # Secondary Search
+# Allow user to type specific file names or search
+# Add checks for exit, affirmative and negative response and search
+# Add listener for exit or esc
+# Restart function listener
+# Help function listener
+# Change output directory
+# Create init function to run
+# Create error handling and "no such directory" catch
+# Implement terminal logs for debugging
 
-#    # If no exit program
-#    ###### THE PROBLEM IS HERE######
-#    if usr_verify == "N":
-#         print("Then there is no pleasing you")
-#     else:
-#         # 2d. Searching name_list for user search term and narrowing list to only items containing it
-#         name_list = [n for n in name_list if name_list.count(usr_verify) > 0]
-#         print("There are now " + cnt_files +
-#               " to be merged. Now the file names are: ")
-#     for n in name_list:
-#         print(n)
-#     usr_verify = str(input("Do you want to merge all these files? Y or N "))
-#     if usr_verify == "" or "exit" or "no" or "No" or "NO" or "n" or "N" or "quit":
-#         print("Then there is no pleasing you")
-#         quit()
-#         # If yes continue and merge
-# if usr_verify == "y" or "yes":
-#     # 3. creates empty list to include the content of each file converted to pandas DF
-#
-# #print(f"Make sure CSV files to be merged are in the {pth}Files directory. ")
-#     if input(f"Ready to continue? y or n ") == "n":
-#         print(f"Please move CSVs to the Files directory at {pth}Files")
-#         quit()
-#     else:
-#         return pth
-#
-#
+# Wishlist
+# Track and manage all downloaded CSVs and create internal file structure
+# Play cool sound when merge is complete
+# GUI interface
+# Come up with cool name
+# publish... for sale?
