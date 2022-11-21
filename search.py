@@ -33,7 +33,6 @@ def search(lst):
         quit()
     # assign files to list if they contain user search term
     file_lst = ([item for item in lst if usr_srch in item])
-    print("SEARCH MODULE COMPLETE")
     # if len(file_lst) == 0:
     #     print(f"No files found matching search. Please try again ")
     return file_lst

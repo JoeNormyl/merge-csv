@@ -1,9 +1,27 @@
-
-
 # Import Modules
 import os
 import pandas as pd
 import search
+
+# Initialize program
+
+
+def main():
+
+    # Settings for Search Module
+    filetype = (".CSV", ".csv")
+
+    # Set File Path
+    path = set_file_path()
+
+    # Generate list of csv files
+    file_list = search.create_file_list(path, filetype)
+
+    # Display initial list
+    current_count = search.cnt_files(file_list)
+
+    # Verify Input and Merge
+    verify(file_list, current_count, path)
 
 
 # Set File Path
@@ -24,22 +42,22 @@ def set_file_path():
         return usr_pth
 
 
-def verify(lst, cnt):
+def verify(lst, cnt, pth):
 
     usr_verify = str(input(f"Do you want to merge {cnt} files? y or n "))
     if usr_verify == "y":
-        merge(lst)
+        merge(lst, pth)
     else:
         res = search.search(lst)
         cnt = search.cnt_files(res)
-        verify(res, cnt)
+        verify(res, cnt, pth)
 
 
 # Merge listed CSVs
 
 
-def merge(lst):
-    file_list = [path + n for n in lst]
+def merge(lst, pth):
+    file_list = [pth + n for n in lst]
     csv_list = []
     # Get user input for name of merged file and add csv file extension
     output_name = str(
@@ -57,23 +75,14 @@ def merge(lst):
 
 
 # Single DF is saved to the path in CSV format, without index column
-    csv_merged.to_csv(path + output_name, index=False)
+    csv_merged.to_csv(pth + output_name, index=False)
 
-    print(f"Merge Complete. File saved in {path}{output_name}")
+    print(f"Merge Complete. File saved in {pth}{output_name}")
 
 
-# Set File Path
-filetype = (".CSV", ".csv")
-path = set_file_path()
+if __name__ == '__main__':
+    main()
 
-# Generate list of csv files
-file_list = search.create_file_list(path, filetype)
-
-# Display initial list
-current_count = search.cnt_files(file_list)
-
-# Verify Input and Merge
-verify(file_list, current_count)
 
 ##### TO DO####
 
