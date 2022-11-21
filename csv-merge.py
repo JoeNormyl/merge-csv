@@ -24,34 +24,6 @@ def set_file_path():
         return usr_pth
 
 
-# Creates list of files matching user input (starts with)
-
-
-def create_file_list(pth):
-
-    # Get user input for files startswith string
-   # usr_srch = str(input("Find files containing: "))
-
-    # Create list with files to merge based on user input
-    file_lst = ([item for item in os.listdir(pth)])
-    print(f"CREATE_FILE_LIST function complete")
-    return file_lst
-
-# Counts and prints all items on a list
-
-
-def cnt_files(lst):
-    cnt = str(len(lst))
-    print(f"There are {cnt} to be merged.")
-    print(f"File names are: ")
-    for n in lst:
-        print(n)
-    print(f"CNT_FILES function complete")
-    return (cnt)
-
-# Verify with user input whether to merge
-
-
 def verify(lst, cnt):
 
     usr_verify = str(input(f"Do you want to merge {cnt} files? y or n "))
@@ -59,7 +31,7 @@ def verify(lst, cnt):
         merge(lst)
     else:
         res = search.search(lst)
-        cnt = cnt_files(res)
+        cnt = search.cnt_files(res)
         verify(res, cnt)
 
 
@@ -69,7 +41,7 @@ def verify(lst, cnt):
 def merge(lst):
     file_list = [path + n for n in lst]
     csv_list = []
-    # Get user input for name of merged file
+    # Get user input for name of merged file and add csv file extension
     output_name = str(
         input("What do you want to call the merged file? ")+".csv")
     print(output_name)
@@ -91,13 +63,14 @@ def merge(lst):
 
 
 # Set File Path
+filetype = (".CSV", ".csv")
 path = set_file_path()
 
-# Run Name List for Start
-file_list = create_file_list(path)
+# Generate list of csv files
+file_list = search.create_file_list(path, filetype)
 
 # Display initial list
-current_count = cnt_files(file_list)
+current_count = search.cnt_files(file_list)
 
 # Verify Input and Merge
 verify(file_list, current_count)
