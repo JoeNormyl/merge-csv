@@ -2,45 +2,65 @@
 import os
 import PySimpleGUI as pg
 import csv_merge
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 # Styling Variables
-title_font = ("Arial", 20)
-head_font = ("Arial", 14)
+title_font = ("Arial", 30)
+head_font = ("Arial", 16)
+browse_font = ("Arial", 16)
+list_font = ("Arial", 16)
 
 # Step 1:Set theme
-pg.theme("darkteal10")
+pg.theme("default1")
 
 # Step 2: Create layout
+title_row = [
+    [
+        pg.Text("Welcome to Mergetown", font=title_font, justification="c"),
+    ]
+]
 file_list_column = [
+    [pg.Text("Select Directory: ", font=head_font)],
     [
-        pg.Text("Select Directory: ", font=head_font)
-    ],
-    [
-
-        pg.In(size=(30, 1), enable_events=True, key="-FOLDER-"),
-        pg.FolderBrowse(),
+        pg.In(size=(29, 3), enable_events=True,
+              key="-FOLDER-", font=browse_font),
+        pg.FolderBrowse(size=(8, 1)),
     ],
     [
         pg.Listbox(
             values=[],
             enable_events=True,
-            size=(50, 20),
-            key="-FILE_LIST-"
+            size=(40, 20),
+            key="-FILE_LIST-",
+            font=list_font,
+            text_color="light blue"
         )
-    ]
+    ],
+    [pg.Text("Choose a file from the list", size=(50, 1), font=head_font)],
+    [pg.Text("Click Add button when finished", size=(50, 1), font=head_font)],
+    [pg.Push(), pg.Button("Select", pad=5,)]
 ]
+
 file_viewer_column = [
-    [pg.Text("Choose a file from the list", size=(50, 1))],
-    [pg.Text("File name: ", size=(70, 3), key="-TOUT-")],
-    [pg.Multiline(size=(70, 30), key="-TEXT-")],
+
+    [pg.Text("File name: ", size=(70, 3), key="-TOUT-", font=head_font)],
+    [pg.Multiline(size=(70, 30), key="-TEXT-", font=list_font)],
     [pg.Button("Merge"), pg.Button("Clear All")]
 ]
 
 layout = [
     [
+        pg.Stretch(),
+        pg.Column(title_row),
+        pg.Stretch()
+    ],
+    [
         pg.Column(file_list_column),
         pg.VSeperator(),
-        pg.Column(file_viewer_column)]]
+        pg.Column(file_viewer_column)]
+]
 
 # Step 3: Create Window
 window = pg.Window("File Viewer", layout)
@@ -49,6 +69,7 @@ window = pg.Window("File Viewer", layout)
 folder_location = ""
 
 while True:
+    print("window launched")
     event, values = window.read()
 
     if event == pg.WIN_CLOSED or event == "Exit":
@@ -56,14 +77,16 @@ while True:
 
     elif event == "-FOLDER-":
         folder_location = values["-FOLDER-"]
+        logging.debug(f"Folder selection: {folder_location}")
         try:
             files = os.listdir(folder_location)
+
         except:
             files = []
 
         file_names = [
             file for file in files
-            if os.path.isfile(os.path.join(folder_location, file)) and file.lower().endswith((".txt", ".csv", ".json", ".py"))
+            if os.path.isfile(os.path.join(folder_location, file)) and file.lower().endswith(".csv")
         ]
         window["-FILE_LIST-"].update(file_names)
 
