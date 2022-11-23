@@ -47,7 +47,7 @@ file_list_column = [
 file_viewer_column = [
 
     [pg.Text("File name: ", size=(70, 3), key="-TOUT-", font=head_font)],
-    [pg.Listbox(values=[], enable_events=True, size=(80, 30), key="-SELECTEDLIST-",
+    [pg.Listbox(values=[], enable_events=True, size=(80, 30), key="-SELECTED_LIST-",
                 font=list_font, select_mode=pg.SELECT_MODE_MULTIPLE)],
     [pg.Button("Remove", key="-REMOVE-"), pg.Button("Clear All"),
      pg.Push(), pg.Button("Merge")]
@@ -98,33 +98,34 @@ while True:
     elif event == "-SELECT-" and len(values["-FILE_LIST-"]) > 0:
         file_names = [file for file in values["-FILE_LIST-"]]
         logging.debug(f"Select Pressed. Pulling in {file_names}\n")
-        window["-SELECTEDLIST-"].update(file for file in file_names)
+        window["-SELECTED_LIST-"].update(file for file in file_names)
 
     elif event == "Merge" and len(values["-FILE_LIST-"]) > 0:
         path = values["-FILE_LIST-"]
         selected_files = values["-FILE_LIST-"]
         logging.debug(
             f"Merge Clicked. \nFiles in Selected Pane are {selected_files} \nPath is {path}")
-        window["-SELECTEDLIST-"].update("Merged")
+        window["-SELECTED_LIST-"].update("Merged")
         # csv_merge.merge(selected_files, path)
 
     elif event == "-REMOVE-":
-        logging.debug(
-            f"All Values: {values}")
-        file_list = values["-SELECTEDLIST-"]
-        remove_list = [file for file in values["-SELECTEDLIST-"]]
-        selected_files = [
-            file for file in values["-SELECTEDLIST-"] if values[file] == False]
+        values = window[1].read()
+        file_list = [file for file in values["-SELECTED_LIST-"]]
+        window["-SELECTED_LIST-"].update(file for file in file_list)
+        logging.debug(f"Values of Selected List Pane set to {file_list}.\n")
+        remove_list = [file for file in values["-SELECTED_LIST-"]]
+        file_list = [
+            file for file in file_list if file not in remove_list]
         logging.debug(
             f"Remove Clicked \nCurrent File list: {file_list} \nRemoving Files: {remove_list} \nRemaining Files: {selected_files}")
-        window["-SELECTEDLIST-"].update(selected_files)
-        # window["-SELECTEDLIST-"].set_value(selected_files)
+        window["-SELECTED_LIST-"].update(file_list)
+        # window["-SELECTED_LIST-"].set_value(selected_files)
 
     elif event == "Clear All":
         selected_files = []
         logging.debug(
             f"Remove Clicked - Right Pane Cleared")
-        window["-SELECTEDLIST-"].update(selected_files)
+        window["-SELECTED_LIST-"].update(selected_files)
 
 
 # Step 5: Close window
