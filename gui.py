@@ -98,7 +98,7 @@ while True:
     elif event == "-SELECT-" and len(values["-FILE_LIST-"]) > 0:
         file_names = [file for file in values["-FILE_LIST-"]]
         logging.debug(f"Select Pressed. Pulling in {file_names}\n")
-        window["-SELECTEDLIST-"].(file for file in file_names)
+        window["-SELECTEDLIST-"].update(file for file in file_names)
 
     elif event == "Merge" and len(values["-FILE_LIST-"]) > 0:
         path = values["-FILE_LIST-"]
