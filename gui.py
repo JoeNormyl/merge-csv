@@ -32,23 +32,23 @@ file_list_column = [
         pg.Listbox(
             values=[],
             enable_events=True,
-            size=(60, 30),
+            size=(60, 20),
             key="-FILE_LIST-",
             font=list_font,
             text_color="light blue",
             select_mode=pg.SELECT_MODE_MULTIPLE
         )
     ],
-    [pg.Text("Choose a file from the list", size=(50, 1), font=head_font)],
-    [pg.Text("Click Add button when finished", size=(50, 1), font=head_font)],
+    [pg.Text("Choose a file from the list", size=(20, 1), font=head_font)],
+    [pg.Text("Click Add button when finished", size=(20, 1), font=head_font)],
     [pg.Push(), pg.Button("Select", key="-SELECT-", pad=5,)]
 ]
 
 file_viewer_column = [
 
     [pg.Text("File name: ", size=(70, 3), key="-TOUT-", font=head_font)],
-    [pg.Listbox(values=[], enable_events=True, size=(80, 30), key="-SELECTED_LIST-",
-                font=list_font, select_mode=pg.SELECT_MODE_MULTIPLE)],
+    [pg.Multiline("", enable_events=True, size=(40, 20), key="-SELECTED_LIST-",
+                  font=list_font)],
     [pg.Button("Remove", key="-REMOVE-"), pg.Button("Clear All"),
      pg.Push(), pg.Button("Merge")]
 ]
@@ -66,7 +66,7 @@ layout = [
 ]
 
 # Step 3: Create Window
-window = pg.Window("File Viewer", layout)
+window = pg.Window("File Viewer", layout, size=(1000, 700))
 
 # Step 4: Event loop
 folder_location = ""
@@ -98,7 +98,11 @@ while True:
     elif event == "-SELECT-" and len(values["-FILE_LIST-"]) > 0:
         file_names = [file for file in values["-FILE_LIST-"]]
         logging.debug(f"Select Pressed. Pulling in {file_names}\n")
-        window["-SELECTED_LIST-"].update(file for file in file_names)
+        selected_text = ""
+        for file in file_names:
+            selected_text += file + "\n"
+        logging.debug(f"Sending text to Selected Pane: {selected_text}\n")
+        window["-SELECTED_LIST-"].update(selected_text)
 
     elif event == "Merge" and len(values["-FILE_LIST-"]) > 0:
         path = values["-FILE_LIST-"]
