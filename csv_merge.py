@@ -46,6 +46,8 @@ def verify(lst, cnt, pth):
 
     usr_verify = str(input(f"Do you want to merge {cnt} files? y or n "))
     if usr_verify == "y":
+        output_name = str(
+            input("What do you want to call the merged file? ")+".csv")
         merge(lst, pth)
     else:
         res = search.search(lst)
@@ -56,16 +58,20 @@ def verify(lst, cnt, pth):
 # Merge listed CSVs
 
 
-def merge(lst, pth):
+def merge(lst, pth, nme):
+    print(f"Type of path is {type(pth)}, and pathe is {pth}")
+    print(f"Type of path is {type(lst)}, and pathe is {lst}")
     file_list = [pth + n for n in lst]
     csv_list = []
+    output_name = nme
     # Get user input for name of merged file and add csv file extension
-    output_name = str(
-        input("What do you want to call the merged file? ")+".csv")
+
     print(output_name)
+    print(file_list)
 
 # reads each (sorted) file in file_list, converts it to pandas DF and appends it to the csv_list
     for file in sorted(file_list):
+        print(file)
         csv_list.append(pd.read_csv(file, encoding='unicode_escape').assign(
             File_Name=os.path.basename(file)))
 
@@ -75,7 +81,7 @@ def merge(lst, pth):
 
 
 # Single DF is saved to the path in CSV format, without index column
-    csv_merged.to_csv(pth + output_name, index=False)
+    csv_merged.to_csv(pth + output_name + ".csv", index=False)
 
     print(f"Merge Complete. File saved in {pth}{output_name}")
 
