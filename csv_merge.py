@@ -7,7 +7,6 @@ import search
 
 
 def main():
-
     # Settings for Search Module
     filetype = (".CSV", ".csv")
 
